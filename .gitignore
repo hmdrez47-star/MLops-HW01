@@ -1,0 +1,57 @@
+# ---- syntax / packaging -------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# ---- virtual environments ----------------------------------------------
+venv/
+.venv/
+env/
+
+# ---- IDE / OS ----------------------------------------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ---- data: never commit raw/processed data or version snapshots --------
+# The datasets are reproduced from the source archive and identified by the
+# SHA-256 hashes recorded in data_versions/metadata.json.
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+data_versions/*.csv
+
+# ---- model artifacts: rebuilt from config + data version ---------------
+models/*.joblib
+models/*.pkl
+models/metadata.json
+!models/.gitkeep
+
+# ---- experiment output -------------------------------------------------
+mlruns/
+mlflow.db
+mlflow.db-*
+experiments/logs/*
+!experiments/logs/.gitkeep
+experiments/results/*
+!experiments/results/.gitkeep
+
+# ---- generated reports -------------------------------------------------
+reports/*.json
+reports/*.md
+!reports/.gitkeep
+
+# ---- secrets -----------------------------------------------------------
+.env
+.env.*
+secrets/
+*.pem
+*.key

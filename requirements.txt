@@ -1,0 +1,21 @@
+# Full development / training environment (Python 3.14 tested; the Docker image
+# uses requirements-serve.txt). Exact versions make the pipeline reproducible.
+pandas==3.1.1
+numpy==2.5.4
+scikit-learn==1.9.1
+scipy==1.18.1
+PyYAML==6.0.3
+joblib==1.6.0
+
+# Experiment tracking
+mlflow==3.18.0
+
+# Serving
+fastapi==0.162.0
+uvicorn==0.54.0
+pydantic==2.14.3
+
+# Testing / quality
+pytest==9.2.0
+httpx==0.28.1
+ruff==0.17.4
