@@ -2,7 +2,7 @@
 
 <div dir="rtl">
 
-این فایل توضیح می‌دهد که در پوشه‌ی `ANSWER` دقیقاً چه چیزی ساخته شد، هر بخش
+این فایل توضیح می‌دهد که در پوشه‌ی `Project` دقیقاً چه چیزی ساخته شد، هر بخش
 برای چه هدفی است، چطور اجرا می‌شود و نتیجه‌ی نهایی چه بود. همه‌ی مراحل تمرین
 (ساختاردهی Git و Reproducibility، دیتاست و آموزش مدل، نسخه‌بندی داده و آزمایش
 به‌همراه تست‌نویسی، Model Serving و Docker، و در انتها Monitoring و Drift و
@@ -107,14 +107,14 @@ python experiments/train_experiment.py --data-file dataset_v2.csv --data-version
 در آزمایش `mlops_homework_01` شش run ثبت شد. هر run حداقل در یکی از سه مورد
 «نسخه‌ی داده»، «نوع مدل» یا «hyperparameter» تفاوت دارد:
 
-| نام run | داده | مدل | مقیاس‌بندی | k | Accuracy | F1 |
-|---|---|---|---|---|---|---|
-| `lr_v2_standard` | v2 | logistic_regression | standard | 10 | 0.6979 | **0.6947** |
-| `svm_v1_standard` | v1 | svm (rbf) | standard | 10 | 0.6875 | 0.5098 |
-| `lr_v1_k8` | v1 | logistic_regression | standard | 8 | 0.6500 | 0.5000 |
-| `lr_v1_standard` | v1 | logistic_regression | standard | 10 | 0.6125 | 0.4746 |
-| `lr_v1_deployed` | v1 | logistic_regression | standard | 10 | 0.6125 | 0.4746 |
-| `rf_v1_none` | v1 | random_forest | none | 10 | 0.5250 | 0.2083 |
+| نام run           | داده | مدل                 | مقیاس‌بندی | k   | Accuracy | F1         |
+| ----------------- | ---- | ------------------- | ---------- | --- | -------- | ---------- |
+| `lr_v2_standard`  | v2   | logistic_regression | standard   | 10  | 0.6979   | **0.6947** |
+| `svm_v1_standard` | v1   | svm (rbf)           | standard   | 10  | 0.6875   | 0.5098     |
+| `lr_v1_k8`        | v1   | logistic_regression | standard   | 8   | 0.6500   | 0.5000     |
+| `lr_v1_standard`  | v1   | logistic_regression | standard   | 10  | 0.6125   | 0.4746     |
+| `lr_v1_deployed`  | v1   | logistic_regression | standard   | 10  | 0.6125   | 0.4746     |
+| `rf_v1_none`      | v1   | random_forest       | none       | 10  | 0.5250   | 0.2083     |
 
 برای هر run این موارد log می‌شود:
 
@@ -225,7 +225,13 @@ python scripts/healthcheck.py --base-url http://127.0.0.1:8000
 `experiments/logs/predictions_YYYY-MM-DD.json` نوشته می‌شود:
 
 ```json
-{"timestamp": "2026-11-06T09:41:12.418+00:00", "latency": 0.002241, "prediction": 1, "confidence": 0.613, "model_version": "logistic_regression-v1-2232"}
+{
+  "timestamp": "2026-11-06T09:41:12.418+00:00",
+  "latency": 0.002241,
+  "prediction": 1,
+  "confidence": 0.613,
+  "model_version": "logistic_regression-v1-2232"
+}
 ```
 
 فقط فیلدهای عملیاتی مجاز هستند (`SAFE_LOG_KEYS`). هر کلیدی که شبیه اطلاعات
@@ -250,12 +256,12 @@ python scripts/healthcheck.py --base-url http://127.0.0.1:8000
 
 نتیجه‌ی مقایسه‌ی v1 با v2:
 
-| ویژگی | آماره KS | p-value | تغییر نسبی میانگین |
-|---|---|---|---|
-| support_tickets | 0.4029 | <0.0001 | +108.5% |
-| monthly_charges | 0.4017 | <0.0001 | +23.5% |
-| credit_score | 0.1883 | <0.0001 | −3.3% |
-| total_charges | 0.1721 | <0.0001 | +31.6% |
+| ویژگی           | آماره KS | p-value | تغییر نسبی میانگین |
+| --------------- | -------- | ------- | ------------------ |
+| support_tickets | 0.4029   | <0.0001 | +108.5%            |
+| monthly_charges | 0.4017   | <0.0001 | +23.5%             |
+| credit_score    | 0.1883   | <0.0001 | −3.3%              |
+| total_charges   | 0.1721   | <0.0001 | +31.6%             |
 
 خروجی: **drift تشخیص داده شد**، `drift_score = 0.3333` (۴ ویژگی از ۱۲) که از
 آستانه‌ی ۰٫۳ بیشتر است و شدت آن **متوسط** است. اقدام پیشنهادی: بررسی خط
@@ -288,7 +294,7 @@ python scripts/drift_report.py --fail-on-drift   # کد خروج ۱ در صور�
 ## ۱۴) دستورهای اجرای کامل
 
 ```bash
-cd ANSWER
+cd Project
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 

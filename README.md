@@ -9,7 +9,7 @@ monitoring and a CI/CD pipeline.
 - **Exercise:** HW_MLOps_01
 - **Primary metric:** `f1_score` (the classes are imbalanced: 26% churn)
 
-> Persian guide: see **[HINT_FA.md](HINT_FA.md)** for a complete step-by-step
+> Persian guide: see **[README_FA.md](README_FA.md)** for a complete step-by-step
 > explanation of what was built and why.
 
 ---
@@ -17,7 +17,7 @@ monitoring and a CI/CD pipeline.
 ## 1. Project structure
 
 ```
-ANSWER/
+Project/
 ├── config/config.yaml              # every parameter (no hard-coded values)
 ├── data/
 │   ├── raw/                        # dataset_v1.csv (400 rows), dataset_v2.csv (480)
@@ -54,17 +54,17 @@ features: `tenure_months`, `monthly_charges`, `total_charges`, `num_services`,
 `support_tickets`, `avg_session_minutes`, `login_frequency`, `contract_length`,
 `payment_delay_days`, `credit_score`, `age`, `num_dependents`.
 
-| version | rows | churn rate | purpose |
-|---|---|---|---|
-| `dataset_v1.csv` | 400 | 26.3% | reference training data |
-| `dataset_v2.csv` | 480 | 48.1% | second version with distribution shift (drift testing) |
+| version          | rows | churn rate | purpose                                                |
+| ---------------- | ---- | ---------- | ------------------------------------------------------ |
+| `dataset_v1.csv` | 400  | 26.3%      | reference training data                                |
+| `dataset_v2.csv` | 480  | 48.1%      | second version with distribution shift (drift testing) |
 
 Registered fingerprints (`data_versions/metadata.json`):
 
-| version_id | sha256 |
-|---|---|
-| v1 | `446b605d500600642b35459724d0a87fc0e47d25eba9167321acd29fb931ad7a` |
-| v2 | `6bd52cc55b6ceaebee11d2123ad2dac234aaea46d713e42a80a95c60996f8162` |
+| version_id | sha256                                                             |
+| ---------- | ------------------------------------------------------------------ |
+| v1         | `446b605d500600642b35459724d0a87fc0e47d25eba9167321acd29fb931ad7a` |
+| v2         | `6bd52cc55b6ceaebee11d2123ad2dac234aaea46d713e42a80a95c60996f8162` |
 
 ## 3. Preprocessing
 
@@ -100,7 +100,7 @@ model type never leaks another model's arguments.
 ## 5. Reproduce
 
 ```bash
-cd ANSWER
+cd Project
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
@@ -112,14 +112,14 @@ pytest tests/ -v                                # 63 tests
 
 ## 6. Results (MLflow: experiment `mlops_homework_01`, 6 runs)
 
-| Run | Data | Model | Scaling | k | Accuracy | F1 | v2-set F1 |
-|---|---|---|---|---|---|---|---|
-| `lr_v2_standard` | v2 | logistic_regression | standard | 10 | 0.6979 | **0.6947** | 0.6848 |
-| `svm_v1_standard` | v1 | svm (rbf) | standard | 10 | 0.6875 | 0.5098 | 0.6283 |
-| `lr_v1_k8` | v1 | logistic_regression | standard | 8 | 0.6500 | 0.5000 | 0.6927 |
-| `lr_v1_standard` | v1 | logistic_regression | standard | 10 | 0.6125 | 0.4746 | 0.6839 |
-| `lr_v1_deployed` | v1 | logistic_regression | standard | 10 | 0.6125 | 0.4746 | 0.6839 |
-| `rf_v1_none` | v1 | random_forest | none | 10 | 0.5250 | 0.2083 | 0.6695 |
+| Run               | Data | Model               | Scaling  | k   | Accuracy | F1         | v2-set F1 |
+| ----------------- | ---- | ------------------- | -------- | --- | -------- | ---------- | --------- |
+| `lr_v2_standard`  | v2   | logistic_regression | standard | 10  | 0.6979   | **0.6947** | 0.6848    |
+| `svm_v1_standard` | v1   | svm (rbf)           | standard | 10  | 0.6875   | 0.5098     | 0.6283    |
+| `lr_v1_k8`        | v1   | logistic_regression | standard | 8   | 0.6500   | 0.5000     | 0.6927    |
+| `lr_v1_standard`  | v1   | logistic_regression | standard | 10  | 0.6125   | 0.4746     | 0.6839    |
+| `lr_v1_deployed`  | v1   | logistic_regression | standard | 10  | 0.6125   | 0.4746     | 0.6839    |
+| `rf_v1_none`      | v1   | random_forest       | none     | 10  | 0.5250   | 0.2083     | 0.6695    |
 
 The best score overall comes from the **v2** run, but that is not a fair
 comparison: v2 is a different (easier, 48% positive) distribution. On the
@@ -130,7 +130,7 @@ interpretable; switching the served model is a one-line config change followed
 by a retrain.
 
 `Drift-set F1` in `experiments/results/comparison.md` is each model's score on
-v2, which is never seen during training. v1 models score *higher* on v2 purely
+v2, which is never seen during training. v1 models score _higher_ on v2 purely
 because v2 is easier — a reminder that a single holdout is not a drift monitor,
 which is why the KS/mean-shift report below exists.
 
@@ -166,8 +166,13 @@ SHA-256 and proves a dataset still matches its recorded fingerprint, so a model
   "model_version": "logistic_regression-v1-2232",
   "created_at": "2026-11-06T09:39:39+00:00",
   "data_version": "v1",
-  "metric": {"name": "f1_score", "value": 0.4746},
-  "metrics": {"accuracy": 0.6125, "f1_score": 0.4746, "precision": 0.3684, "recall": 0.6667},
+  "metric": { "name": "f1_score", "value": 0.4746 },
+  "metrics": {
+    "accuracy": 0.6125,
+    "f1_score": 0.4746,
+    "precision": 0.3684,
+    "recall": 0.6667
+  },
   "model_type": "LogisticRegression",
   "input_features": ["tenure_months", "..."],
   "selected_features": ["tenure_months", "..."],
@@ -187,7 +192,13 @@ and applies exactly the scaling/selection used in training.
 `experiments/logs/predictions_YYYY-MM-DD.json`:
 
 ```json
-{"timestamp": "2026-11-06T09:41:12.418+00:00", "latency": 0.002241, "prediction": 1, "confidence": 0.613, "model_version": "logistic_regression-v1-2232"}
+{
+  "timestamp": "2026-11-06T09:41:12.418+00:00",
+  "latency": 0.002241,
+  "prediction": 1,
+  "confidence": 0.613,
+  "model_version": "logistic_regression-v1-2232"
+}
 ```
 
 Only operational fields are allowed (`SAFE_LOG_KEYS`); anything that looks
@@ -200,12 +211,12 @@ sensitive (user id, e-mail, raw features, tokens…) is dropped before writing.
 
 `reports/drift_report.json` / `.md` compare v1 → v2:
 
-| feature | KS statistic | p-value | relative shift |
-|---|---|---|---|
-| support_tickets | 0.4029 | <0.0001 | +108.5% |
-| monthly_charges | 0.4017 | <0.0001 | +23.5% |
-| credit_score | 0.1883 | <0.0001 | −3.3% |
-| total_charges | 0.1721 | <0.0001 | +31.6% |
+| feature         | KS statistic | p-value | relative shift |
+| --------------- | ------------ | ------- | -------------- |
+| support_tickets | 0.4029       | <0.0001 | +108.5%        |
+| monthly_charges | 0.4017       | <0.0001 | +23.5%         |
+| credit_score    | 0.1883       | <0.0001 | −3.3%          |
+| total_charges   | 0.1721       | <0.0001 | +31.6%         |
 
 **Result:** drift detected, `drift_score = 0.3333` (4/12 features) > `0.3`,
 severity **medium**. Recommended action: investigate the upstream pipeline for
@@ -223,11 +234,11 @@ curl -s -X POST localhost:8000/predict -H 'Content-Type: application/json' \
 # {"prediction":0,"confidence":0.62,"latency":0.0019}
 ```
 
-| endpoint | description |
-|---|---|
-| `GET /health` | `status`, `model_version`, `data_version`, `model_loaded`, uptime |
+| endpoint        | description                                                            |
+| --------------- | ---------------------------------------------------------------------- |
+| `GET /health`   | `status`, `model_version`, `data_version`, `model_loaded`, uptime      |
 | `POST /predict` | 12 raw features → `prediction`, `confidence`, `latency`; logs the call |
-| `GET /metadata` | metadata of the served artifact |
+| `GET /metadata` | metadata of the served artifact                                        |
 
 Wrong feature counts return `400`, non-numeric payloads `422`, a missing model
 `503`. The response never echoes raw features.
