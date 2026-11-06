@@ -107,7 +107,7 @@ pip install -r requirements.txt
 python experiments/train_experiment.py          # single reference run
 python experiments/run_experiments.py           # 5 tracked runs + comparison
 python scripts/drift_report.py                  # drift report → reports/
-pytest tests/ -v                                # 62 tests
+pytest tests/ -v                                # 63 tests
 ```
 
 ## 6. Results (MLflow: experiment `mlops_homework_01`, 6 runs)

@@ -27,7 +27,7 @@ CI/CD) پیاده‌سازی شده است.
 - `src/serving/app.py` — سرویس FastAPI.
 - `experiments/train_experiment.py` — اجرای کل pipeline بر اساس config.
 - `experiments/run_experiments.py` — اجرای دسته‌ای آزمایش‌ها و ساخت جدول مقایسه.
-- `tests/` — ۶۲ تست pytest.
+- `tests/` — ۶۳ تست pytest.
 - `models/` — خروجی مدل: `model.joblib`، `preprocessor.joblib` و
   `metadata.json`.
 - `reports/` — گزارش drift به‌صورت JSON و Markdown.
@@ -157,7 +157,7 @@ mlflow ui --backend-store-uri sqlite:///$(pwd)/mlflow.db
 
 ## ۸) تست‌نویسی با pytest
 
-۶۲ تست نوشته شد (همه پاس می‌شوند) که این موارد را پوشش می‌دهند:
+۶۳ تست نوشته شد (همه پاس می‌شوند) که این موارد را پوشش می‌دهند:
 
 - **داده:** بارگذاری فایل موجود، خطای `FileNotFoundError` برای فایل ناموجود،
   فایل خالی، هش تکرارپذیر و حساس به تغییر داده، اندازه‌ی صحیح train/test،
@@ -295,7 +295,7 @@ pip install -r requirements.txt
 python experiments/train_experiment.py      # یک run مرجع
 python experiments/run_experiments.py       # پنج run + جدول مقایسه
 python scripts/drift_report.py              # گزارش drift
-pytest tests/ -v                            # ۶۲ تست
+pytest tests/ -v                            # ۶۳ تست
 uvicorn src.serving.app:app --port 8000     # سرویس
 ```
 
