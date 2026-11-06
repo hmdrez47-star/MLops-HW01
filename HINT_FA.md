@@ -225,7 +225,7 @@ python scripts/healthcheck.py --base-url http://127.0.0.1:8000
 `experiments/logs/predictions_YYYY-MM-DD.json` نوشته می‌شود:
 
 ```json
-{"timestamp": "2026-11-06T09:41:12.418+00:00", "latency": 0.002241, "prediction": 1, "confidence": 0.613, "model_version": "logistic_regression-v1-2072"}
+{"timestamp": "2026-11-06T09:41:12.418+00:00", "latency": 0.002241, "prediction": 1, "confidence": 0.613, "model_version": "logistic_regression-v1-2232"}
 ```
 
 فقط فیلدهای عملیاتی مجاز هستند (`SAFE_LOG_KEYS`). هر کلیدی که شبیه اطلاعات

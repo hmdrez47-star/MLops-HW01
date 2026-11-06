@@ -163,7 +163,7 @@ SHA-256 and proves a dataset still matches its recorded fingerprint, so a model
 
 ```json
 {
-  "model_version": "logistic_regression-v1-2072",
+  "model_version": "logistic_regression-v1-2232",
   "created_at": "2026-11-06T09:39:39+00:00",
   "data_version": "v1",
   "metric": {"name": "f1_score", "value": 0.4746},
@@ -187,7 +187,7 @@ and applies exactly the scaling/selection used in training.
 `experiments/logs/predictions_YYYY-MM-DD.json`:
 
 ```json
-{"timestamp": "2026-11-06T09:41:12.418+00:00", "latency": 0.002241, "prediction": 1, "confidence": 0.613, "model_version": "logistic_regression-v1-2072"}
+{"timestamp": "2026-11-06T09:41:12.418+00:00", "latency": 0.002241, "prediction": 1, "confidence": 0.613, "model_version": "logistic_regression-v1-2232"}
 ```
 
 Only operational fields are allowed (`SAFE_LOG_KEYS`); anything that looks
