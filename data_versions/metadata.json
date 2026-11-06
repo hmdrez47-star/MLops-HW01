@@ -1,0 +1,18 @@
+[
+  {
+    "version_id": "v1",
+    "hash": "446b605d500600642b35459724d0a87fc0e47d25eba9167321acd29fb931ad7a",
+    "description": "Training dataset dataset_v1.csv (400 rows, 12 features)",
+    "n_rows": 400,
+    "n_columns": 13,
+    "created_at": "2026-11-06T09:39:39+00:00"
+  },
+  {
+    "version_id": "v2",
+    "hash": "6bd52cc55b6ceaebee11d2123ad2dac234aaea46d713e42a80a95c60996f8162",
+    "description": "Drift / holdout dataset dataset_v2.csv (480 rows, distribution shifted)",
+    "n_rows": 480,
+    "n_columns": 13,
+    "created_at": "2026-11-06T09:39:39+00:00"
+  }
+]
