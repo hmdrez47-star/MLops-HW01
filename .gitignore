@@ -20,19 +20,19 @@ env/
 .DS_Store
 Thumbs.db
 
-# ---- data: never commit raw/processed data or version snapshots --------
-# The datasets are reproduced from the source archive and identified by the
-# SHA-256 hashes recorded in data_versions/metadata.json.
-data/raw/*
+# ---- data --------------------------------------------------------------
+# The two reference datasets are tiny (~50 KB) and required to run the
+# pipeline, the tests and the drift check, so they are tracked here and
+# identified by the SHA-256 hashes in data_versions/metadata.json.
+# Frozen snapshots and processed output are regenerated, so they stay out.
 data/processed/*
-!data/raw/.gitkeep
 !data/processed/.gitkeep
 data_versions/*.csv
 
-# ---- model artifacts: rebuilt from config + data version ---------------
-models/*.joblib
-models/*.pkl
-models/metadata.json
+# ---- model artifacts ---------------------------------------------------
+# The served artifact is under 5 KB and is part of the submission, so it is
+# tracked; models/metadata.json records the data version, metric and git commit
+# needed to rebuild it byte-for-byte.
 !models/.gitkeep
 
 # ---- experiment output -------------------------------------------------
