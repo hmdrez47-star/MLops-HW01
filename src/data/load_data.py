@@ -204,9 +204,16 @@ def create_data_version(
         "created_at": utc_now(),
     }
 
-    versions = [
-        v for v in _read_metadata(metadata_path) if v.get("version_id") != version_id
-    ]
+    existing = _read_metadata(metadata_path)
+    previous = next(
+        (item for item in existing if item.get("version_id") == version_id), None
+    )
+    if previous is not None and previous.get("hash") == entry["hash"]:
+        # Same bytes registered again: keep the original fingerprint timestamp so
+        # metadata.json stays stable when the pipeline re-runs on unchanged data.
+        entry["created_at"] = previous.get("created_at", entry["created_at"])
+
+    versions = [item for item in existing if item.get("version_id") != version_id]
     versions.append(entry)
     versions.sort(key=lambda item: str(item.get("version_id")))
     _write_json_atomic(metadata_path, versions)

@@ -162,6 +162,16 @@ class TestDataVersioning:
         assert [version["version_id"] for version in versions] == ["v1", "v2"]
         assert get_data_version("v2", directory)["n_rows"] == len(sample_df) + 5
 
+    def test_reregistering_identical_data_keeps_created_at(
+        self, sample_df, tmp_path: Path
+    ):
+        directory = tmp_path / "versions"
+        first = create_data_version(sample_df, "v1", "first", output_dir=directory)
+        second = create_data_version(sample_df, "v1", "first", output_dir=directory)
+
+        assert second["created_at"] == first["created_at"]
+        assert len(list_data_versions(directory)) == 1
+
     def test_unknown_version_raises(self, tmp_path: Path):
         with pytest.raises(KeyError):
             get_data_version("nope", tmp_path)
